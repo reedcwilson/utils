@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import xml.etree.cElementTree as ET
 import os
 import sys
