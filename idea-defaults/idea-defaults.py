@@ -29,13 +29,18 @@ if len(sys.argv) == 1:
 # Run Configurations
 #===============================================================================
 
-run_configurations_dir = os.path.join(idea_dir, 'runConfigurations')
-clean_install_u = os.path.join(run_configurations_dir, 'clean_install__U.xml')
-if not os.path.exists(run_configurations_dir):
-  os.makedirs(run_configurations_dir)
-if not os.path.exists(clean_install_u):
-    shutil.copy(os.path.dirname(os.path.realpath(__file__)) + '/clean_install__U.xml', clean_install_u)
-
+install_dir = os.path.join(idea_dir, 'runConfigurations')
+config_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'runConfigurations')
+# make the install directory if it doesn't exist
+if not os.path.exists(install_dir):
+  os.makedirs(install_dir)
+# copy all of the saved configs to the install dir
+configs = [ c for c in os.listdir(config_dir) if os.path.isfile(os.path.join(config_dir, c)) ]
+for config in configs:
+  filename = os.path.basename(config)
+  install_file = os.path.join(install_dir, filename)
+  if not os.path.exists(install_file):
+    shutil.copy(os.path.join(config_dir, config), os.path.join(install_dir, config))
 
 #===============================================================================
 # Workspace Defaults
