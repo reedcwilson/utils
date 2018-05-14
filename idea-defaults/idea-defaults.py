@@ -62,15 +62,29 @@ for config in configs:
 # Workspace Defaults
 # =============================================================================
 
+# parse the workspace.xml config
 workspace_file = "%s/workspace.xml" % (idea_dir)
 tree = ET.parse(workspace_file)
+root = tree.getroot()
 
-# get all the window info objects and set the auto_hide attr to true
-xpath = 'component[@name="ToolWindowManager"]/layout/window_info'
-window_infos = tree.getroot().findall(xpath)
-for info in window_infos:
-    info.set("auto_hide", 'true')
+# parse the default ToolWindowManager
+tools_config_file = os.path.join(
+        os.path.dirname(os.path.realpath(__file__)),
+        'tools-config.xml')
+default_tools = ET.parse(tools_config_file).getroot()
+
+xtools = 'component[@name="ToolWindowManager"]'
+tools = root.find(xtools)
+if tools:
+    root.remove(tools)
+root.append(default_tools)
 
 tree.write(workspace_file)
 
-print("updated defaults")
+msg = """
+--- updated defaults! ---
+
+NOTE: IntelliJ will overwrite these changes on exit if the project is running.
+You will need to close the project window and re-run this program
+"""
+print(msg)
