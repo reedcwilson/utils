@@ -33,7 +33,6 @@ if len(sys.argv) > 1:
 if len(sys.argv) == 1:
     idea_dir = get_idea_dir(os.path.dirname(os.path.realpath(__file__)))
 
-
 # =============================================================================
 # Run Configurations
 # =============================================================================
