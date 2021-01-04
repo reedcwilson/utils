@@ -18,8 +18,11 @@ def calculate_hours(activities):
 
 
 def report(activities):
+    name = activities[0][0]
     hours = calculate_hours(activities)
-    print(f'{activities[0][0]}: {len(activities)} for {hours:.2f} hours')
+    num = len(activities)
+    average = hours / num
+    print(f'{name}: {num} for {hours:.2f} hr - avg {average:.2f} hr')
 
 
 def main():
